@@ -50,7 +50,9 @@ public class FolderService {
 
 
     public Page<FolderResponse> findAll(String mailbox, PageRequest pageRequest) {
-        Page<Folder> folderPage = repository.findByMailboxName(mailbox, pageRequest);
+
+        Mailbox mailboxEntity = mailboxService.findByName(mailbox);
+        Page<Folder> folderPage = repository.findByMailboxName(mailboxEntity.getName(), pageRequest);
 
 
         return folderPage.map(FolderResponse::toResponse);
