@@ -1,0 +1,25 @@
+
+CREATE TABLE IF NOT EXISTS MAILBOX (
+    idt SERIAL PRIMARY KEY,
+    name TEXT UNIQUE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS FOLDER (
+    idt SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    mailbox_id INT NOT NULL,
+    FOREIGN KEY (mailbox_id) REFERENCES MAILBOX(idt) ON DELETE CASCADE,
+    UNIQUE (name, mailbox_id)
+);
+
+CREATE TABLE IF NOT EXISTS MESSAGE (
+    idt SERIAL PRIMARY KEY,
+    sender TEXT NOT NULL,
+    recipient TEXT NOT NULL,
+    subject TEXT,
+    body TEXT,
+    read BOOLEAN NOT NULL,
+    send_at TIMESTAMP NOT NULL,
+    folder_id INT NOT NULL,
+    FOREIGN KEY (folder_id) REFERENCES FOLDER(idt) ON DELETE CASCADE
+);
