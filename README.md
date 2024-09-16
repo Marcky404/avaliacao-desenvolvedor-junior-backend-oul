@@ -250,5 +250,3 @@ Todas as chamadas que têm corpo na requisição e resposta devem estar no forma
 - A API deve seguir os princípios REST.
 - A API deve ser projetada e implementada de forma que permita futuras melhorias e adições.
 - Documente todas as decisões tomadas e as motivações por trás delas.
-
-```
