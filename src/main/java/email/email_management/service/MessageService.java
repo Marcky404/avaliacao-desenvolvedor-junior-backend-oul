@@ -12,7 +12,6 @@ import email.email_management.models.response.FolderMessagesResponse;
 import email.email_management.models.response.MailboxFolderMessageResponse;
 import email.email_management.models.response.MessageResponse;
 import email.email_management.repository.MessageRepository;
-import email.email_management.utils.ValidateFields;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -95,7 +94,7 @@ public class MessageService {
         return repository.findMessagesByMailboxNameAndFolderIdAndMessageId(mailboxEntity.getIdt(), folderEntity.getIdt(), messageEntity.getIdt());
     }
 
-     private Folder validateDefaultFolder(Mailbox mailbox, String folderName) {
+    private Folder validateDefaultFolder(Mailbox mailbox, String folderName) {
         if (StringUtil.isNullOrEmpty(folderName)) {
             for (Folder f : mailbox.getFolders()) {
                 if (f.getName().equals("INBOX")) {
