@@ -7,6 +7,7 @@ import email.email_management.service.MailboxService;
 import email.email_management.service.MessageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,55 +25,35 @@ public class MailboxController {
     private final MessageService messageService;
 
     @PostMapping
-    public ResponseEntity<MailboxResponse> create(@Valid @RequestBody MailboxRequest mailboxRequest) {
-        MailboxResponse mailboxResponse = service.create(mailboxRequest);
+    public ResponseEntity<Void> create(@Valid @RequestBody MailboxRequest mailboxRequest) {
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(mailboxResponse.getIdt())
-                .toUri();
+        service.create(mailboxRequest);
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/{mailbox}/folders")
-    public ResponseEntity<MailboxResponse> createFolder(@PathVariable("mailbox") String mailbox, @RequestBody @Valid FolderRequest folderRequest) {
-        FolderResponse folderResponse = folderService.create(mailbox, folderRequest);
+    public ResponseEntity<Void> createFolder(@PathVariable("mailbox") String mailbox, @RequestBody @Valid FolderRequest folderRequest) {
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(folderResponse.getIdt())
-                .toUri();
+        folderService.create(mailbox, folderRequest);
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/{mailbox}/send-messagefolders")
-    public ResponseEntity<MessageResponse> createMessage(@PathVariable("mailbox") String mailbox, @RequestBody @Valid MessageRequest messageRequest) {
-        MessageResponse messageResponse = messageService.create(mailbox, messageRequest);
+    @PostMapping("/{mailbox}/send-message")
+    public ResponseEntity<Void> createMessage(@PathVariable("mailbox") String mailbox, @RequestBody @Valid MessageRequest messageRequest) {
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(messageResponse.getId())
-                .toUri();
+         messageService.create(mailbox, messageRequest);
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/{mailbox}/receive-message")
     public ResponseEntity<MessageResponse> receiveMessage(@PathVariable("mailbox") String mailbox, @RequestBody @Valid ReceiveMessageRequest receiveMessageRequest) {
-        MessageResponse messageResponse = messageService.receiveMessage(mailbox, receiveMessageRequest);
 
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(messageResponse.getId())
-                .toUri();
+        messageService.receiveMessage(mailbox, receiveMessageRequest);
 
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("{mailbox}/folders/{folderIdt}/messages/{messageIdt}")
@@ -83,7 +64,7 @@ public class MailboxController {
     }
 
     @GetMapping
-    public ResponseEntity<List<MailboxListResponse>> getAll() {
+    public ResponseEntity<List<MailboxListResponse>> findAll() {
 
         return ResponseEntity.ok(service.findAll());
     }

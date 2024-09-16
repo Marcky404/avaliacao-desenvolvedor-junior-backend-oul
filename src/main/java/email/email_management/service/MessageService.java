@@ -1,5 +1,6 @@
 package email.email_management.service;
 
+import ch.qos.logback.core.util.StringUtil;
 import email.email_management.exception.BusinessException;
 import email.email_management.models.Folder;
 import email.email_management.models.Mailbox;
@@ -30,49 +31,46 @@ public class MessageService {
     private final MailboxService mailboxService;
     private final FolderService folderService;
 
-    public MessageResponse create(String maibox, MessageRequest messageRequest) {
+    public void create(String mailbox, MessageRequest messageRequest) {
         Message message = MessageRequest.toEntity(messageRequest);
-        Mailbox maiboxEntity = mailboxService.findByName(maibox);
+        Mailbox mailboxEntity = mailboxService.findByName(mailbox);
 
-        Folder folder = maiboxEntity.getFolders().stream()
-                .filter(f -> f.getName().equals("SENT"))
-                .findFirst().orElseThrow(() -> new BusinessException(HttpStatus.BAD_REQUEST, "Pasta Não encontrada"));
+        for (Folder f : mailboxEntity.getFolders()) {
+            if (f.getName().equals("SENT")) {
+                message.setFolder(f);
+            }
+        }
 
-        message.setFolder(folder);
         repository.save(message);
-
-        return MessageResponse.toResponse(message);
     }
 
     public Message findByIdt(Integer idt) {
         return repository.findById(idt).orElseThrow(() -> new BusinessException(HttpStatus.NOT_FOUND, "Messagem não existe"));
     }
 
-    public MessageResponse receiveMessage(String maibox, ReceiveMessageRequest receiveMessageRequest) {
+    public void receiveMessage(String mailbox, ReceiveMessageRequest receiveMessageRequest) {
         Message message = ReceiveMessageRequest.toEntity(receiveMessageRequest);
-        Mailbox maiboxEntity = mailboxService.findByName(maibox);
+        Mailbox mailboxEntity = mailboxService.findByName(mailbox);
 
-        Folder folder = ValidateFields.findOrDefaultFolder(maiboxEntity, receiveMessageRequest.getFolder());
+        Folder folder = validateDefaultFolder(mailboxEntity, receiveMessageRequest.getFolder());
 
         message.setFolder(folder);
-        repository.save(message);
 
-        return MessageResponse.toResponse(message);
+        repository.save(message);
     }
 
     @Transactional
-    public MessageResponse update(String maibox, Integer folderIdt, Integer messageIdt, ReadRequest readRequest) {
-        Mailbox mailbox = mailboxService.findByName(maibox);
+    public MessageResponse update(String mailbox, Integer folderIdt, Integer messageIdt, ReadRequest readRequest) {
+        Mailbox mailboxEntity = mailboxService.findByName(mailbox);
         Message message = findByIdt(messageIdt);
         Folder folder = folderService.findByIdt(folderIdt);
 
-        folder.setMailbox(mailbox);
+        folder.setMailbox(mailboxEntity);
         message.setFolder(folder);
         message.setRead(readRequest.getRead());
 
-        repository.save(message);
 
-        return MessageResponse.toResponse(message);
+        return MessageResponse.toResponse(repository.save(message));
     }
 
     public List<FolderMessagesResponse> findMessagesByMailboxNameAndFolderId(String mailbox, Integer folderIdt) {
@@ -81,6 +79,7 @@ public class MessageService {
 
         return repository.findMessagesByMailboxNameAndFolderId(mailboxEntity.getIdt(), folderEntity.getIdt());
     }
+
     public Page<FolderMessagesResponse> findMessagesByMailboxNameAndFolderId(String mailbox, Integer folderIdt, PageRequest pageRequest) {
         Mailbox mailboxEntity = mailboxService.findByName(mailbox);
         Folder folderEntity = folderService.findByIdt(folderIdt);
@@ -93,9 +92,27 @@ public class MessageService {
         Folder folderEntity = folderService.findByIdt(folderIdt);
         Message messageEntity = findByIdt(messageIdt);
 
-        return repository.findMessagesByMailboxNameAndFolderIdAndMessageId(mailboxEntity.getIdt(), folderEntity.getIdt(),messageEntity.getIdt());
+        return repository.findMessagesByMailboxNameAndFolderIdAndMessageId(mailboxEntity.getIdt(), folderEntity.getIdt(), messageEntity.getIdt());
     }
 
+     private Folder validateDefaultFolder(Mailbox mailbox, String folderName) {
+        if (StringUtil.isNullOrEmpty(folderName)) {
+            for (Folder f : mailbox.getFolders()) {
+                if (f.getName().equals("INBOX")) {
+                    return f;
+                }
+            }
+        }
+
+        return filterFolder(mailbox, folderName);
+    }
+
+    private static Folder filterFolder(Mailbox mailbox, String folderName) {
+        return mailbox.getFolders().stream()
+                .filter(f -> f.getName().equals(folderName))
+                .findFirst().orElseThrow(() -> new BusinessException(HttpStatus.BAD_REQUEST, "Pasta Não encontrada"));
+
+    }
 
 
 }

@@ -27,4 +27,12 @@ public class Folder {
     @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> message;
 
+
+    @Override
+    public String toString() {
+        return "Folder{" +
+                "idt=" + idt +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

@@ -8,7 +8,6 @@ import email.email_management.models.response.FolderResponse;
 import email.email_management.repository.FolderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,7 +21,7 @@ public class FolderService {
     private final FolderRepository repository;
     private final MailboxService mailboxService;
 
-    public FolderResponse create(String mailbox, FolderRequest folderRequest) {
+    public void create(String mailbox, FolderRequest folderRequest) {
         Folder folder = FolderRequest.toEntity(folderRequest);
         Mailbox mailboxEntity = mailboxService.findByName(mailbox);
 
@@ -35,7 +34,6 @@ public class FolderService {
         folder.setMailbox(mailboxEntity);
 
         repository.save(folder);
-        return FolderResponse.toResponse(folder);
     }
 
     public Folder findByIdt(Integer folderIdt) {

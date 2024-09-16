@@ -31,4 +31,6 @@ public class Message {
     @JoinColumn(name = "folder_idt", nullable = false)
     private Folder folder;
 
+
+
 }

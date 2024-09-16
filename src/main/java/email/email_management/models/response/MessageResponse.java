@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class MessageResponse {
 
 
-    private Integer id;
+    private Integer idt;
     private String sender;
     private String recipient;
     private String subject;
@@ -23,7 +23,7 @@ public class MessageResponse {
     public static MessageResponse toResponse(Message message) {
         MessageResponse messageResponse = new MessageResponse();
 
-        messageResponse.setId(message.getIdt());
+        messageResponse.setIdt(message.getIdt());
         messageResponse.setSender(message.getSender());
         messageResponse.setRecipient(message.getRecipient());
         messageResponse.setSubject(message.getSubject());

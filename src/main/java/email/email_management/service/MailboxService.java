@@ -4,9 +4,7 @@ import email.email_management.exception.BusinessException;
 import email.email_management.models.Folder;
 import email.email_management.models.Mailbox;
 import email.email_management.models.request.MailboxRequest;
-import email.email_management.models.response.FolderResponse;
 import email.email_management.models.response.MailboxListResponse;
-import email.email_management.models.response.MailboxResponse;
 import email.email_management.repository.MailboxRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,7 +21,7 @@ public class MailboxService {
 
     private final MailboxRepository repository;
 
-    public MailboxResponse create(MailboxRequest mailboxRequest) {
+    public void create(MailboxRequest mailboxRequest) {
 
         Mailbox mailbox = MailboxRequest.toEntity(mailboxRequest);
         mailbox.setFolders(createFolderBase(mailbox));
@@ -32,9 +30,7 @@ public class MailboxService {
             throw new BusinessException(HttpStatus.CONFLICT, "Caixa já existe");
         }
 
-        repository.save(mailbox);
-
-        return MailboxResponse.toResponse(mailbox);
+         repository.save(mailbox);
     }
 
 
@@ -53,7 +49,7 @@ public class MailboxService {
         return mailboxes.map(m -> MailboxListResponse.toResponse(m.getName()));
     }
 
-    public Boolean existsByName(String name) {
+    private Boolean existsByName(String name) {
         return repository.existsByName(name);
     }
 

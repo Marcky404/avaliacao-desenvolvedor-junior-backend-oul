@@ -23,4 +23,12 @@ public class Mailbox {
     @OneToMany(mappedBy = "mailbox", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Folder> folders;
 
+
+    @Override
+    public String toString() {
+        return "Mailbox{" +
+                "idt=" + idt +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
