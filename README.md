@@ -252,5 +252,3 @@ Todas as chamadas que têm corpo na requisição e resposta devem estar no forma
 - Documente todas as decisões tomadas e as motivações por trás delas.
 
 ```
-
-Você pode copiar e colar esse texto diretamente no seu arquivo `README.md`. Se precisar de mais alguma coisa ou ajustes, só avisar!
