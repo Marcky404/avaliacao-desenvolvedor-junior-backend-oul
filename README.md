@@ -14,34 +14,41 @@ Este projeto é uma API para gestão de caixas de e-mail, pastas e mensagens. Fo
 - **Docker**
 - **Postman**
 
+Claro! Aqui está uma versão mais amigável e acessível da explicação para rodar o projeto:
+
 ---
 
 ## 🚀 Como Rodar o Projeto
 
-Para executar o projeto, siga os passos abaixo:
+Para colocar o projeto em funcionamento, siga estas etapas simples:
 
-1. **Certifique-se de que o Docker e o Docker Compose estão instalados** em sua máquina. Se ainda não estiverem, você pode baixá-los e instalá-los a partir do [site oficial do Docker](https://www.docker.com/products/docker-desktop).
+1. **Instale o Docker e o Docker Compose**: Esses são os programas que vão ajudar a rodar o projeto. Se ainda não os tem, você pode baixá-los e instalá-los no [site do Docker](https://www.docker.com/products/docker-desktop).
 
-2. **Na pasta raiz do projeto**, onde está localizado o arquivo `docker-compose.yml`, abra o terminal e execute o seguinte comando para criar e iniciar os containers:
+2. **Prepare o Ambiente**: Vá para a pasta principal do projeto, onde você encontrará um arquivo chamado `docker-compose.yml`.
 
-    ```bash
-    docker-compose up --build -d
-    ```
+3. **Inicie o Projeto**:
+   - Abra o terminal (ou prompt de comando).
+   - Digite o seguinte comando e pressione Enter:
+     ```bash
+     docker-compose up --build -d
+     ```
+   - Esse comando vai criar e iniciar os componentes do projeto para você.
 
-    Este comando cria a imagem do Docker e inicia os containers em segundo plano.
+4. **Verifique se Tudo Está no Ar**:
+   - Depois de alguns momentos, verifique se tudo está funcionando bem com este comando:
+     ```bash
+     docker-compose ps
+     ```
+   - Isso vai mostrar o status dos componentes.
 
-3. **Aguarde até que os containers estejam totalmente iniciados.** Você pode verificar o status dos containers com o comando:
+5. **Teste a API**:
+   - Para experimentar a API, use o arquivo de coleções do Postman que está incluído no projeto. O arquivo se chama `email.postman_collection.json` e está na raiz do projeto.
+   - No Postman:
+     - Abra o aplicativo.
+     - Clique em "Importar" no canto superior esquerdo.
+     - Escolha o arquivo `email.postman_collection.json` e clique em "Importar".
 
-    ```bash
-    docker-compose ps
-    ```
-
-4. **Para testar os endpoints da API**, você pode usar o arquivo de coleções do Postman incluído no projeto. O arquivo está localizado na raiz do projeto com o nome `email.postman_collection.json`. Importe este arquivo para o Postman para começar a testar a API.
-
-    Para importar o arquivo no Postman:
-    - Abra o Postman.
-    - Clique em "Import" no canto superior esquerdo.
-    - Selecione o arquivo `email.postman_collection.json` e clique em "Import".
+Isso é tudo! Agora você pode começar a explorar e testar a API. Se precisar de ajuda ou tiver alguma dúvida, é só perguntar! 😊
 
 ---
 
