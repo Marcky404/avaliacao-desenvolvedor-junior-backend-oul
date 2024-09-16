@@ -1,12 +1,25 @@
 
 ```markdown
-
-
 # Passos Necessários para Rodar o Projeto
 
-Na pasta raiz da aplicação, execute o comando no terminal para criar a imagem do Docker:
+1. **Crie a imagem do Docker:**
 
-docker-compose up --build -d
+   Na pasta raiz da aplicação, abra o terminal e rode o seguinte comando para criar a imagem do Docker:
+
+   ```bash
+   docker-compose up --build -d
+   ```
+
+   Esse comando vai compilar o projeto e subir os contêineres em segundo plano.
+
+2. **Verifique se o contêiner está rodando:**
+
+   Após rodar o comando acima, digite o seguinte para confirmar se está tudo certo:
+
+   ```bash
+   docker ps
+   ```
+
 ```
 
 ## 🗃️ Script de Banco de Dados
