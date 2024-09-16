@@ -1,7 +1,8 @@
-```markdown
+---
+
 # 📧 Projeto de Administração de E-mail
 
-Este projeto é uma API para gestão de caixas de e-mail, pastas e mensagens. Foi desenvolvido utilizando as seguintes tecnologias:
+Este projeto é uma API para gestão de caixas de e-mail, pastas e mensagens. Foi desenvolvido usando as seguintes tecnologias:
 
 - **Java 17**
 - **Spring**
@@ -12,41 +13,37 @@ Este projeto é uma API para gestão de caixas de e-mail, pastas e mensagens. Fo
 - **Docker**
 - **Postman**
 
-Claro! Aqui está uma versão mais amigável e acessível da explicação para rodar o projeto:
-
 ---
 
 ## 🚀 Como Rodar o Projeto
 
-Para colocar o projeto em funcionamento, siga estas etapas simples:
+Para rodar o projeto, siga estes passos:
 
-1. **Instale o Docker e o Docker Compose**: Esses são os programas que vão ajudar a rodar o projeto. Se ainda não os tem, você pode baixá-los e instalá-los no [site do Docker](https://www.docker.com/products/docker-desktop).
+1. **Instale o Docker e o Docker Compose**:
+   - Se ainda não tem, baixe e instale a partir do [site do Docker](https://www.docker.com/products/docker-desktop).
 
-2. **Prepare o Ambiente**: Vá para a pasta principal do projeto, onde você encontrará um arquivo chamado `docker-compose.yml`.
+2. **Prepare o Ambiente**:
+   - Navegue até a pasta principal do projeto onde está o arquivo `docker-compose.yml`.
 
 3. **Inicie o Projeto**:
-   - Abra o terminal (ou prompt de comando).
-   - Digite o seguinte comando e pressione Enter:
+   - Abra o terminal e execute:
      ```bash
      docker-compose up --build -d
      ```
-   - Esse comando vai criar e iniciar os componentes do projeto para você.
+   - Isso vai criar e iniciar os containers necessários.
 
-4. **Verifique se Tudo Está no Ar**:
-   - Depois de alguns momentos, verifique se tudo está funcionando bem com este comando:
+4. **Verifique o Status**:
+   - Para confirmar que tudo está funcionando, use:
      ```bash
      docker-compose ps
      ```
-   - Isso vai mostrar o status dos componentes.
 
 5. **Teste a API**:
-   - Para experimentar a API, use o arquivo de coleções do Postman que está incluído no projeto. O arquivo se chama `email.postman_collection.json` e está na raiz do projeto.
+   - Use o arquivo `email.postman_collection.json` para testar os endpoints.
    - No Postman:
      - Abra o aplicativo.
      - Clique em "Importar" no canto superior esquerdo.
-     - Escolha o arquivo `email.postman_collection.json` e clique em "Importar".
-
-Isso é tudo! Agora você pode começar a explorar e testar a API. Se precisar de ajuda ou tiver alguma dúvida, é só perguntar! 😊
+     - Selecione o arquivo e clique em "Importar".
 
 ---
 
@@ -109,8 +106,6 @@ Desenvolva um recurso para criação de uma caixa (mailbox). Ao criar uma caixa,
 }
 ```
 
-![image](https://github.com/user-attachments/assets/1b91bfdf-583f-4c47-860e-38bb9d4185e4)
-
 **Retornos da API:**
 
 - **201** - Caixa Criada 🎉
@@ -131,8 +126,6 @@ Desenvolva um recurso para criação de pasta (folder) associada a uma caixa. N�
   "name": "arquivos-de-testes"
 }
 ```
-
-![image](https://github.com/user-attachments/assets/c3491591-5b27-41f6-b11e-092c84645ac2)
 
 **Retornos da API:**
 
@@ -157,8 +150,6 @@ Desenvolva um recurso para salvar o envio de uma mensagem de uma caixa. Deverá 
   "body": "Corpo do e-mail de teste"
 }
 ```
-
-![image](https://github.com/user-attachments/assets/a58052d0-4ce2-405e-8eb2-c76ee4c8114f)
 
 **Retornos da API:**
 
@@ -185,8 +176,6 @@ Desenvolva um recurso para salvar o recebimento de uma mensagem em uma caixa. De
 }
 ```
 
-![image](https://github.com/user-attachments/assets/7b97bdbc-a34b-4da4-a061-901f5ee73c5d)
-
 **Retornos da API:**
 
 - **201** - Mensagem armazenada 🎉
@@ -210,8 +199,6 @@ Desenvolva um recurso para marcar uma mensagem como lida ou não lida. Deverá o
 }
 ```
 
-![image](https://github.com/user-attachments/assets/8f7bc908-d489-42bd-8a44-1273cdaf93e1)
-
 **Retornos da API:**
 
 - **204** - Mensagem atualizada 🎉
@@ -234,9 +221,7 @@ Desenvolva um recurso para listar as caixas armazenadas.
     "name": "teste@uol.com.br"
   },
   {
-    "name": "avaliacao@
-
-dominio.com"
+    "name": "avaliacao@dominio.com"
   }
 ]
 ```
@@ -276,7 +261,9 @@ Desenvolva um recurso para listar as pastas de uma caixa. Deverá obrigatoriamen
 
 Desenvolva um recurso para listar as mensagens de uma pasta de uma caixa. Deverá obrigatoriamente receber o nome da caixa e identificador (idt) da pasta.
 
-**URL:** `/api/v1/mailboxes/{mailbox}/folders/{folderIdt}/messages`  
+**URL:** `/api/v1/mailboxes
+
+/{mailbox}/folders/{folderIdt}/messages`  
 **Método:** GET
 
 **Exemplo de corpo da resposta:**
@@ -286,20 +273,10 @@ Desenvolva um recurso para listar as mensagens de uma pasta de uma caixa. Dever�
   {
     "idt": 1,
     "sender": "teste@dominio.com",
-    "recipient": "teste@uol.com.br",
-    "subject": "Assunto de teste",
-    "body": "Corpo do e-mail de teste",
-    "send_at": "2023-01-01 12:00:00",
-    "read": false
-  },
-  {
-    "idt": 2,
-    "sender": "teste2@dominio.com",
-    "recipient": "teste@uol.com.br",
-    "subject": "Outro assunto",
-    "body": "Outro corpo de e-mail",
-    "send_at": "2023-01-02 15:04:05",
-    "read": false
+    "recipient": "exemplo@dominio.com",
+    "subject": "Teste",
+    "send_at": "2024-09-01T12:34:56Z",
+    "read": true
   }
 ]
 ```
@@ -307,12 +284,11 @@ Desenvolva um recurso para listar as mensagens de uma pasta de uma caixa. Dever�
 **Retornos da API:**
 
 - **200** - Devolve a lista de Mensagens 📋
-- **404** - Mailbox não existe 🚫
-- **404** - Folder não existe 🚫
+- **404** - Mailbox ou Pasta não existe 🚫
 
 #### 9. Detalhamento de Mensagem
 
-Desenvolva um recurso para detalhar uma mensagem. Deverá obrigatoriamente receber o nome da caixa, identificador (idt) da pasta e identificador (idt) da mensagem.
+Desenvolva um recurso para detalhar uma mensagem de uma pasta de uma caixa. Deverá obrigatoriamente receber o nome da caixa, identificador (idt) da pasta e identificador (idt) da mensagem.
 
 **URL:** `/api/v1/mailboxes/{mailbox}/folders/{folderIdt}/messages/{messageIdt}`  
 **Método:** GET
@@ -321,25 +297,17 @@ Desenvolva um recurso para detalhar uma mensagem. Deverá obrigatoriamente receb
 
 ```json
 {
-  "sender": "teste@uol.com.br",
-  "recipient": "teste@dominio.com",
-  "subject": "Assunto de teste",
-  "body": "Corpo do e-mail de teste",
-  "send_at": "2023-01-02 15:04:05",
-  "read": false
+  "idt": 1,
+  "sender": "teste@dominio.com",
+  "recipient": "exemplo@dominio.com",
+  "subject": "Teste",
+  "body": "Corpo do e-mail",
+  "send_at": "2024-09-01T12:34:56Z",
+  "read": true
 }
 ```
 
 **Retornos da API:**
 
-- **200** - Devolve os detalhes da mensagem 📋
-- **404** - Mailbox não existe 🚫
-- **404** - Folder não existe 🚫
-- **404** - Message não existe 🚫
-
----
-
-Se precisar de mais alguma coisa ou tiver dúvidas, sinta-se à vontade para perguntar! 😊
-```
-
-Agora, a explicação de como subir o projeto está mais clara e inclui informações sobre o arquivo de coleções do Postman para facilitar o teste dos endpoints.
+- **200** - Detalhamento da Mensagem 📋
+- **404** - Mailbox, Pasta ou Mensagem não existe 🚫
