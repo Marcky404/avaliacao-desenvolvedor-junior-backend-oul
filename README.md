@@ -6,8 +6,6 @@
 
 Na pasta raiz da aplicação, execute o comando no terminal para criar a imagem do Docker:
 
-```bash
-
 docker-compose up --build -d
 ```
 
