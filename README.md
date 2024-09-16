@@ -1,5 +1,3 @@
-Claro! Aqui está a seção de explicação de como subir o projeto, aprimorada para incluir informações sobre o arquivo de coleções do Postman:
-
 ```markdown
 # 📧 Projeto de Administração de E-mail
 
