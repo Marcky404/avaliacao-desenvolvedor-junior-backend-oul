@@ -1,255 +1,264 @@
-# API de Gestão de Caixas de E-mail
+Claro! Aqui está o texto formatado em Markdown para o seu README do GitHub:
 
-Este projeto é uma API HTTP RESTful desenvolvida em Kotlin/Java para a gestão de caixas de e-mail, pastas e mensagens armazenadas. A API permite criar caixas de e-mail, pastas, enviar e receber mensagens, e muito mais.
+```markdown
+# Passos Necessários para Rodar o Projeto
 
-## Tecnologias
+Na pasta raiz da aplicação, execute o comando no terminal para criar a imagem do Docker:
 
-- Kotlin/Java
-- Docker
-- Docker Compose
+```bash
+docker-compose up --build -d
+```
 
-## Requisitos
+## Avaliação Desenvolvedor Junior Backend
 
-- Docker
-- Docker Compose
+### Tarefas
 
-## Passos Necessários para Executar o Projeto
+1. Desenvolver uma API HTTP Restful em Kotlin/Java para gestão de caixas de e-mail, pastas e mensagens armazenadas.
+2. Criar um arquivo `README.md` no formato Markdown com instruções de como executar o projeto, dentre outras que julgar necessário.
 
-1. **Clonar o Repositório**
+![image](https://github.com/user-attachments/assets/d4288bfa-8d67-4f58-8adc-ee365a892d6a)
 
-    ```bash
-    git clone https://github.com/your-username/your-repository.git
-    cd your-repository
-    ```
+### API
 
-2. **Construir e Rodar o Projeto**
+Todas as chamadas que têm corpo na requisição e resposta deverão estar no formato JSON. A seguir, os recursos a serem desenvolvidos:
 
-    Na pasta raiz da aplicação, execute o comando para criar a imagem do Docker e iniciar os containers:
+#### 1. Criação de Caixa (Mailbox)
 
-    ```bash
-    docker-compose up --build -d
-    ```
+Desenvolver um recurso para criação de caixa (mailbox). Ao criar uma caixa, as pastas (folder) INBOX, JUNK e SENT deverão ser criadas. Não poderá ter caixas duplicadas. O nome da caixa deve ter o formato de e-mail (exemplo “localpart@domain”).
 
-3. **Acessar a API**
+- **URL**: `/api/v1/mailboxes` – **Método**: POST
+- **Exemplo de Corpo da Requisição**:
 
-    A API estará disponível em `http://localhost:8080`.
+```json
+{
+  "name": "teste@dominio.com"
+}
+```
 
-## Documentação da API
+![image](https://github.com/user-attachments/assets/1b91bfdf-583f-4c47-860e-38bb9d4185e4)
 
-### 1. Criar Caixa (Mailbox)
+- **Retornos da API**:
+  - `201` - Caixa Criada
+  - `400` - Nome da caixa é inválido
+  - `409` - Caixa já existe
 
-- **URL:** `/api/v1/mailboxes`
-- **Método:** `POST`
-- **Corpo da Requisição:**
+#### 2. Criação de Pasta (Folder)
 
-    ```json
-    {
-      "name": "teste@dominio.com"
-    }
-    ```
+Desenvolver um recurso para criação de pasta (folder) associada a uma caixa. Não poderá ter pastas duplicadas para uma mesma caixa. Os caracteres permitidos são letras a-z, A-Z, hífen (-), underline (_), limitado a até 100 caracteres.
 
-- **Respostas:**
-    - `201` - Caixa Criada
-    - `400` - Nome da caixa é inválido
-    - `409` - Caixa já existe
+- **URL**: `/api/v1/mailboxes/{mailbox}/folders` – **Método**: POST
+- **Exemplo de Corpo da Requisição**:
 
-### 2. Criar Pasta (Folder)
+```json
+{
+  "name": "arquivos-de-testes"
+}
+```
 
-- **URL:** `/api/v1/mailboxes/{mailbox}/folders`
-- **Método:** `POST`
-- **Corpo da Requisição:**
+![image](https://github.com/user-attachments/assets/c3491591-5b27-41f6-b11e-092c84645ac2)
 
-    ```json
-    {
-      "name": "arquivos-de-testes"
-    }
-    ```
+- **Retornos da API**:
+  - `201` - Pasta criada
+  - `404` - Mailbox não existe
+  - `409` - Pasta já existe
+  - `400` - Pasta inválida
 
-- **Respostas:**
-    - `201` - Pasta criada
-    - `404` - Mailbox não existe
-    - `409` - Pasta já existe
-    - `400` - Pasta inválida
+#### 3. Envio de Mensagem
 
-### 3. Enviar Mensagem
+Desenvolver um recurso para salvar o envio de uma mensagem de uma caixa. Receberá obrigatoriamente o nome da caixa que executou o envio e o nome do e-mail destinatário, ambos devem ter o formato de e-mail. Opcionalmente, o assunto (se informado, limitado a 50 caracteres), corpo do e-mail.
 
-- **URL:** `/api/v1/mailboxes/{mailbox}/send-message`
-- **Método:** `POST`
-- **Corpo da Requisição:**
+- **URL**: `/api/v1/mailboxes/{mailbox}/send-message` – **Método**: POST
+- **Exemplo de Corpo da Requisição**:
 
-    ```json
-    {
-      "recipient": "teste@dominio.com",
-      "subject": "Assunto de teste",
-      "body": "Corpo do e-mail de teste"
-    }
-    ```
+```json
+{
+  "recipient": "teste@dominio.com",
+  "subject": "Assunto de teste",
+  "body": "Corpo do e-mail de teste"
+}
+```
 
-- **Respostas:**
-    - `201` - Mensagem armazenada
-    - `404` - Mailbox não existe
-    - `400` - Destinatário inválido
-    - `400` - Assunto inválido
+![image](https://github.com/user-attachments/assets/a58052d0-4ce2-405e-8eb2-c76ee4c8114f)
 
-### 4. Receber Mensagem
+- **Retornos da API**:
+  - `201` - Mensagem armazenada
+  - `404` - Mailbox não existe
+  - `400` - Destinatário inválido
+  - `400` - Assunto inválido
 
-- **URL:** `/api/v1/mailboxes/{mailbox}/receive-message`
-- **Método:** `POST`
-- **Corpo da Requisição:**
+#### 4. Recebimento de Mensagem
 
-    ```json
-    {
-      "sender": "teste@dominio.com",
-      "subject": "Assunto de teste",
-      "body": "Corpo do e-mail de teste",
-      "folder": "JUNK"
-    }
-    ```
+Desenvolver um recurso para salvar o recebimento de uma mensagem em uma caixa. Receberá obrigatoriamente o nome da caixa que recebeu a mensagem e o nome do e-mail remetente, ambos devem ter o formato de e-mail. Opcionalmente, o assunto (se informado, limitado a 50 caracteres), corpo do e-mail e o nome da pasta que deve armazenar a mensagem.
 
-- **Respostas:**
-    - `201` - Mensagem armazenada
-    - `404` - Mailbox não existe
-    - `400` - Remetente inválido
-    - `400` - Assunto inválido
-    - `400` - Pasta não existe
+- **URL**: `/api/v1/mailboxes/{mailbox}/receive-message` – **Método**: POST
+- **Exemplo de Corpo da Requisição**:
 
-### 5. Marcar Mensagem como Lida ou Não Lida
+```json
+{
+  "sender": "teste@dominio.com",
+  "subject": "Assunto de teste",
+  "body": "Corpo do e-mail de teste",
+  "folder": "JUNK"
+}
+```
 
-- **URL:** `/api/v1/mailboxes/{mailbox}/folders/{folderIdt}/messages/{messageIdt}/read`
-- **Método:** `PUT`
-- **Corpo da Requisição:**
+![image](https://github.com/user-attachments/assets/7b97bdbc-a34b-4da4-a061-901f5ee73c5d)
 
-    ```json
-    {
-      "read": true
-    }
-    ```
+- **Retornos da API**:
+  - `201` - Mensagem armazenada
+  - `404` - Mailbox não existe
+  - `400` - Remetente inválido
+  - `400` - Assunto inválido
+  - `400` - Pasta já existe
 
-- **Respostas:**
-    - `204` - Mensagem atualizada
-    - `404` - Mailbox não existe
-    - `400` - Pasta não existe
-    - `400` - Mensagem não existe
+#### 5. Marcar Mensagem como Lida/Não Lida
 
-### 6. Listar Caixas de E-mail
+Desenvolver um recurso para marcar uma mensagem como lida ou não lida. Receberá obrigatoriamente o nome da caixa, identificador (ID) da pasta e identificador (ID) da mensagem.
 
-- **URL:** `/api/v1/mailboxes`
-- **Método:** `GET`
-- **Corpo da Resposta:**
+- **URL**: `/api/v1/mailboxes/{mailbox}/folders/{folderIdt}/messages/{messageIdt}/read` – **Método**: PUT
+- **Exemplo de Corpo da Requisição**:
 
-    ```json
-    [
-      {
-        "name": "teste@uol.com.br"
-      },
-      {
-        "name": "avaliacao@bol.com.br"
-      }
-    ]
-    ```
+```json
+{
+  "read": true
+}
+```
 
-- **Resposta:**
-    - `200` - Devolve a lista de caixas
+![image](https://github.com/user-attachments/assets/8f7bc908-d489-42bd-8a44-1273cdaf93e1)
 
-### 7. Listar Pastas de uma Caixa
+- **Retornos da API**:
+  - `204` - Mensagem atualizada
+  - `404` - Mailbox não existe
+  - `400` - Pasta não existe
+  - `400` - Mensagem não existe
 
-- **URL:** `/api/v1/mailboxes/{mailbox}/folders`
-- **Método:** `GET`
-- **Corpo da Resposta:**
+#### 6. Listar Caixas
 
-    ```json
-    [
-      {
-        "idt": 1,
-        "name": "INBOX"
-      },
-      {
-        "idt": 2,
-        "name": "JUNK"
-      },
-      {
-        "idt": 3,
-        "name": "SENT"
-      }
-    ]
-    ```
+Desenvolver um recurso para listar as caixas armazenadas.
 
-- **Respostas:**
-    - `200` - Devolve a lista de pastas
-    - `404` - Mailbox não existe
+- **URL**: `/api/v1/mailboxes` – **Método**: GET
+- **Exemplo de Corpo da Resposta**:
 
-### 8. Listar Mensagens de uma Caixa e Pasta
+```json
+[
+  {
+    "name": "teste@uol.com.br"
+  },
+  {
+    "name": "avaliacao@bol.com.br"
+  }
+]
+```
 
-- **URL:** `/api/v1/mailboxes/{mailbox}/folders/{folderIdt}/messages`
-- **Método:** `GET`
-- **Corpo da Resposta:**
+- **Retorno da API**:
+  - `200` - Devolve a lista de caixas
 
-    ```json
-    [
-      {
-        "idt": 1,
-        "sender": "teste@uol.com.br",
-        "subject": "Assunto de teste",
-        "sent_at": "2006-01-02 15:04:05",
-        "read": true
-      },
-      {
-        "idt": 2,
-        "sender": "test@uh.com.br",
-        "subject": "Assunto de testado",
-        "sent_at": "2023-01-02 15:04:05",
-        "read": false
-      }
-    ]
-    ```
+#### 7. Listar Pastas de uma Caixa
 
-- **Respostas:**
-    - `200` - Devolve a lista de mensagens
-    - `404` - Mailbox não existe
-    - `404` - Pasta não existe
+Desenvolver um recurso para listar as pastas de uma caixa. Receberá obrigatoriamente o nome da caixa.
 
-### 9. Visualizar Detalhes da Mensagem
+- **URL**: `/api/v1/mailboxes/{mailbox}/folders` – **Método**: GET
+- **Exemplo de Corpo da Resposta**:
 
-- **URL:** `/api/v1/mailboxes/{mailbox}/folders/{folderIdt}/messages/{messageIdt}`
-- **Método:** `GET`
-- **Corpo da Resposta:**
+```json
+[
+  {
+    "idt": 1,
+    "name": "INBOX"
+  },
+  {
+    "idt": 2,
+    "name": "JUNK"
+  },
+  {
+    "idt": 3,
+    "name": "SENT"
+  }
+]
+```
 
-    ```json
-    {
-      "idt": 2,
-      "sender": "test@uh.com.br",
-      "recipient": "destino@bol.com.br",
-      "subject": "Assunto de testado",
-      "body": "corpo da mensagem",
-      "sent_at": "2023-01-02 15:04:05",
-      "read": false
-    }
-    ```
+![image](https://github.com/user-attachments/assets/51cdfdb9-eb5a-426d-8889-8613fce8f675)
 
-- **Respostas:**
-    - `200` - Devolve os dados da mensagem
-    - `404` - Mailbox não existe
-    - `404` - Pasta não existe
-    - `404` - Mensagem não existe
+- **Retornos da API**:
+  - `200` - Devolve a lista de pastas
+  - `404` - Mailbox não existe
 
-## Recursos Bônus
+#### 8. Listar Mensagens de uma Caixa e Pasta
 
-1. **Criar Testes Unitários e/ou de Integração**
-2. **Implementar a Execução do Projeto Utilizando Docker e/ou Docker Compose**
-3. **Criar um Recurso `/v2` para os Recursos 6, 7 e 8 que Implementem Algum Meio de Paginação**
+Desenvolver um recurso para listar as mensagens de uma caixa e pasta. Receberá obrigatoriamente o nome da caixa e da pasta.
 
-## Conclusão
+- **URL**: `/api/v1/mailboxes/{mailbox}/folders/{folderIdt}/messages` – **Método**: GET
+- **Exemplo de Corpo da Resposta**:
 
-Ao finalizar o projeto, o mesmo deve ser disponibilizado em algum repositório de código público (exemplo: GitHub, GitLab, Bitbucket, etc.) e o link compartilhado com a consultoria.
+```json
+[
+  {
+    "idt": 1,
+    "sender": "teste@uol.com.br",
+    "subject": "Assunto de teste",
+    "sent_at": "2006-01-02 15:04:05",
+    "read": true
+  },
+  {
+    "idt": 2,
+    "sender": "test@uh.com.br",
+    "subject": "Assunto de testado",
+    "sent_at": "2023-01-02 15:04:05",
+    "read": false
+  }
+]
+```
 
-## Imagens
+![image](https://github.com/user-attachments/assets/83aca641-66dc-4054-94ca-aa4f8adecb90)
 
-- ![Imagem 1](https://github.com/user-attachments/assets/d4288bfa-8d67-4f58-8adc-ee365a892d6a)
-- ![Imagem 2](https://github.com/user-attachments/assets/1b91bfdf-583f-4c47-860e-38bb9d4185e4)
-- ![Imagem 3](https://github.com/user-attachments/assets/c3491591-5b27-41f6-b11e-092c84645ac2)
-- ![Imagem 4](https://github.com/user-attachments/assets/a58052d0-4ce2-405e-8eb2-c76ee4c8114f)
-- ![Imagem 5](https://github.com/user-attachments/assets/7b97bdbc-a34b-4da4-a061-901f5ee73c5d)
-- ![Imagem 6](https://github.com/user-attachments/assets/8f7bc908-d489-42bd-8a44-1273cdaf93e1)
-- ![Imagem 7](https://github.com/user-attachments/assets/51cdfdb9-eb5a-426d-8889-8613fce8f675)
-- ![Imagem 8](https://github.com/user-attachments/assets/83aca641-66dc-4054-94ca-aa4f8adecb90)
-- ![Imagem 9](https://github.com/user-attachments/assets/029d56e7-96d3-4a4e-a95d-052481037286)
+- **Retornos da API**:
+  - `200` - Devolve a lista de mensagens
+  - `404` - Mailbox não existe
+  - `404` - Folder não existe
+
+#### 9. Visualizar Detalhes da Mensagem
+
+Desenvolver um recurso para visualizar os detalhes da mensagem. Receberá obrigatoriamente o nome da caixa, nome da pasta e identificador da mensagem.
+
+- **URL**: `/api/v1/mailboxes/{mailbox}/folders/{folderIdt}/messages/{messageIdt}` – **Método**: GET
+- **Exemplo de Corpo da Resposta**:
+
+```json
+{
+  "idt": 2,
+  "sender": "test@uh.com
+
+.br",
+  "subject": "Assunto de testado",
+  "body": "Corpo do e-mail testado",
+  "sent_at": "2023-01-02 15:04:05",
+  "read": false
+}
+```
+
+![image](https://github.com/user-attachments/assets/abe18f94-1c1d-4673-b2bc-e77c1d92f0b0)
+
+- **Retornos da API**:
+  - `200` - Devolve os detalhes da mensagem
+  - `404` - Mailbox não existe
+  - `404` - Folder não existe
+  - `404` - Mensagem não existe
+
+### Instruções de Execução
+
+1. **Certifique-se de que o Docker e o Docker Compose estão instalados.**
+2. **Na raiz do projeto, execute:**
+
+```bash
+docker-compose up --build -d
+```
+
+3. **Acesse a API através dos endpoints especificados.**
+
+### Configurações Adicionais
+
+- **Banco de Dados**: Verifique as configurações do banco de dados no arquivo `docker-compose.yml` e ajuste conforme necessário.
+
+```
+
+Se precisar de mais alguma alteração ou ajuste, é só avisar!
