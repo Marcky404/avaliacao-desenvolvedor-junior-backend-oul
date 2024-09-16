@@ -1,4 +1,4 @@
-Claro! Aqui está o README atualizado com o script do banco de dados logo após a explicação de como rodar o projeto:
+Claro! Aqui está a seção de explicação de como subir o projeto, aprimorada para incluir informações sobre o arquivo de coleções do Postman:
 
 ```markdown
 # 📧 Projeto de Administração de E-mail
@@ -16,13 +16,32 @@ Este projeto é uma API para gestão de caixas de e-mail, pastas e mensagens. Fo
 
 ---
 
-## 🚀 Passos Necessários para Rodar o Projeto
+## 🚀 Como Rodar o Projeto
 
-Na pasta raiz da aplicação, execute no terminal o comando para criar a imagem do Docker:
+Para executar o projeto, siga os passos abaixo:
 
-```bash
-docker-compose up --build -d
-```
+1. **Certifique-se de que o Docker e o Docker Compose estão instalados** em sua máquina. Se ainda não estiverem, você pode baixá-los e instalá-los a partir do [site oficial do Docker](https://www.docker.com/products/docker-desktop).
+
+2. **Na pasta raiz do projeto**, onde está localizado o arquivo `docker-compose.yml`, abra o terminal e execute o seguinte comando para criar e iniciar os containers:
+
+    ```bash
+    docker-compose up --build -d
+    ```
+
+    Este comando cria a imagem do Docker e inicia os containers em segundo plano.
+
+3. **Aguarde até que os containers estejam totalmente iniciados.** Você pode verificar o status dos containers com o comando:
+
+    ```bash
+    docker-compose ps
+    ```
+
+4. **Para testar os endpoints da API**, você pode usar o arquivo de coleções do Postman incluído no projeto. O arquivo está localizado na raiz do projeto com o nome `email.postman_collection.json`. Importe este arquivo para o Postman para começar a testar a API.
+
+    Para importar o arquivo no Postman:
+    - Abra o Postman.
+    - Clique em "Import" no canto superior esquerdo.
+    - Selecione o arquivo `email.postman_collection.json` e clique em "Import".
 
 ---
 
@@ -210,14 +229,16 @@ Desenvolva um recurso para listar as caixas armazenadas.
     "name": "teste@uol.com.br"
   },
   {
-    "name": "avaliacao@bol.com.br"
+    "name": "avaliacao@
+
+dominio.com"
   }
 ]
 ```
 
-**Retorno da API:**
+**Retornos da API:**
 
-- **200** - Devolve a lista de caixas 📋
+- **200** - Devolve a lista de Mailboxes 📋
 
 #### 7. Listar Pastas de uma Caixa
 
@@ -237,26 +258,18 @@ Desenvolva um recurso para listar as pastas de uma caixa. Deverá obrigatoriamen
   {
     "idt": 2,
     "name": "JUNK"
-  },
-  {
-    "idt": 3,
-    "name": "SENT"
   }
 ]
 ```
-
-![image](https://github.com/user-attachments/assets/51cdfdb9-eb5a-426d-8889-8613fce8f675)
 
 **Retornos da API:**
 
 - **200** - Devolve a lista de Pastas 📋
 - **404** - Mailbox não existe 🚫
 
-#### 8. Listar Mensagens de uma Caixa e Pasta
+#### 8. Listar Mensagens de uma Pasta
 
-Desenvolva um
-
- recurso para listar as mensagens de uma pasta de uma caixa. Deverá obrigatoriamente receber o nome da caixa e identificador (idt) da pasta.
+Desenvolva um recurso para listar as mensagens de uma pasta de uma caixa. Deverá obrigatoriamente receber o nome da caixa e identificador (idt) da pasta.
 
 **URL:** `/api/v1/mailboxes/{mailbox}/folders/{folderIdt}/messages`  
 **Método:** GET
@@ -318,3 +331,10 @@ Desenvolva um recurso para detalhar uma mensagem. Deverá obrigatoriamente receb
 - **404** - Mailbox não existe 🚫
 - **404** - Folder não existe 🚫
 - **404** - Message não existe 🚫
+
+---
+
+Se precisar de mais alguma coisa ou tiver dúvidas, sinta-se à vontade para perguntar! 😊
+```
+
+Agora, a explicação de como subir o projeto está mais clara e inclui informações sobre o arquivo de coleções do Postman para facilitar o teste dos endpoints.
