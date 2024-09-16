@@ -1,6 +1,7 @@
 
-
 ```markdown
+
+
 # Passos Necessários para Rodar o Projeto
 
 Na pasta raiz da aplicação, execute o comando no terminal para criar a imagem do Docker:
