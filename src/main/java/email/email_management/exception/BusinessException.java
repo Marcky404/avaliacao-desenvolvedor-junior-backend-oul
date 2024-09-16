@@ -1,6 +1,5 @@
 package email.email_management.exception;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +20,7 @@ public class BusinessException extends RuntimeException {
     private String message;
     private String description;
 
-    public BusinessException(HttpStatus httpStatus, String message){
+    public BusinessException(HttpStatus httpStatus, String message) {
         this.httpStatusCode = httpStatus;
         this.message = message;
     }

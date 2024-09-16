@@ -1,18 +1,24 @@
 version: '3.8'
 
 services:
-  db:
-    image: postgres
-    restart: always
+  api:
+    build: .
+    container_name: email-management
+    ports:
+      - "8080:8080"
     environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/email
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    container_name: email-db
+    environment:
+      POSTGRES_DB: email
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: email
     ports:
       - "5432:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
-
-volumes:
-  db_data:
-    driver: local
