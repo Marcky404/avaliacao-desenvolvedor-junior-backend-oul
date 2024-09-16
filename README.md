@@ -240,13 +240,7 @@ Todas as chamadas que têm corpo na requisição e resposta devem estar no forma
 
 1. Criar testes unitários e/ou integração.
 2. Implementar a execução do projeto utilizando Docker e/ou Docker Compose.
-3. Criar um
+3. Criar um recurso /v2 para os recursos 6, 7 e 8 que implementem algum
+meio de paginação.
 
- front-end simples para consumir a API desenvolvida.
-4. Criar um script para popular o banco com dados fictícios (opcional).
 
-## Observações
-
-- A API deve seguir os princípios REST.
-- A API deve ser projetada e implementada de forma que permita futuras melhorias e adições.
-- Documente todas as decisões tomadas e as motivações por trás delas.
